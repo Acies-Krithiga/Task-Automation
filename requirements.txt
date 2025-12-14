@@ -1,0 +1,9 @@
+Flask
+gunicorn
+gspread
+oauth2client
+apscheduler
+requests
+yagmail
+groq
+python-dotenv

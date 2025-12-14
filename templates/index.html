@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professional Daily Log</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom styles for background and font */
+        :root {
+            --color-gold: #ffd966;
+            --color-dark-card: #1a1a1a;
+            --color-dark-input: #2c2c2c;
+            --color-text-light: #f8fafc;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: black; 
+            color: var(--color-text-light); 
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .container {
+            max-width: 600px;
+            width: 100%;
+        }
+        .card {
+            background-color: var(--color-dark-card); 
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 4px 6px -2px rgba(0, 0, 0, 0.2);
+        }
+        label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+            color: #ccc; 
+        }
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 0.75rem;
+            margin-bottom: 1.25rem;
+            background-color: var(--color-dark-input); 
+            border: 1px solid #444; 
+            color: var(--color-text-light);
+            border-radius: 0.5rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        input[type="text"]:focus, textarea:focus, select:focus {
+            border-color: var(--color-gold);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(255, 217, 102, 0.4); 
+        }
+        button {
+            width: 100%;
+            padding: 1rem;
+            background-color: var(--color-gold); 
+            color: black; 
+            font-weight: 700;
+            border-radius: 0.5rem;
+            transition: background-color 0.3s, transform 0.1s;
+            cursor: pointer;
+            border: none;
+        }
+        button:hover {
+            background-color: #e5c05c; 
+            transform: translateY(-1px);
+        }
+        /* Loader styles removed as we are using a standard form submission */
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1 class="text-3xl font-extrabold text-center mb-6 text-[#ffd966]">PROFESSIONAL DAILY LOG</h1>
+        <p class="text-center text-gray-400 mb-8">Submit your focus and progress for immediate AI classification.</p>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                <div class="mb-4">
+                    {% for category, message in messages %}
+                        <div class="card p-4 rounded-xl border-l-4 {{ 'border-[#ffd966]' if category == 'success' else 'border-red-500' }}">
+                            <strong class="text-sm">{{ message }}</strong>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
+
+        <div class="card p-6 rounded-2xl shadow-2xl mb-8">
+            <form id="update-form" method="POST" action="{{ url_for('submit') }}">
+                
+                <div class="mb-4"> 
+                    <label for="day">Day</label>
+                    <input type="text" name="day" id="day">
+
+                    <label for="date">Date</label>
+                    <input type="text" name="date" id="date" placeholder="DD-MMM-YYYY">
+
+
+                    <label for="name">Team Member Identity</label>
+                    <select name="name" id="name" required>
+                        <option value="" disabled selected>Select Your Identity</option>
+                        {% for member in team %}
+                            <option value="{{ member }}">{{ member }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+                
+                <label for="task">Main Task Title</label>
+                <input type="text" name="task" id="task" placeholder="e.g., Implemented user authentication flow" required>
+
+                <label for="notes">Notes / Details</label>
+                <textarea name="notes" id="notes" rows="4" placeholder="Detailed progress, blockers, or context..." required></textarea>
+
+                <label for="docs">Referring Documents (URL/Path)</label>
+                <input type="text" name="docs" id="docs" placeholder="Link to Jira ticket, PR, or Document (Optional)">
+
+                <button type="submit" id="submit-button" class="mt-4 flex items-center justify-center">
+                    LOG UPDATE & AUTO-CLASSIFY
+                </button>
+            </form>
+        </div>
+
+        </div>
+
+    <script>
+  const today = new Date();
+  const months = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+  const days = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  const d = String(today.getDate()).padStart(2, "0");
+  const m = months[today.getMonth()];
+  const y = today.getFullYear();
+
+  document.getElementById("day").value = days[today.getDay()];
+  document.getElementById("date").value = `${d}-${m}-${y}`;
+</script>
+
+
+
+</body>
+</html>

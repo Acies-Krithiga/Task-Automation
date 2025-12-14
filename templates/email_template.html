@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weekly Engineering Digest</title>
+    <!-- Load Poppins font from Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Base Styles */
+        body { 
+            margin: 0; 
+            padding: 0; 
+            background-color: black; 
+            font-family: 'Poppins', Helvetica, Arial, sans-serif; 
+        }
+        .container { 
+            max-width: 600px; 
+            margin: 0 auto; 
+            background-color: #1a1a1a; /* Dark Card Background */
+            box-shadow: 0 4px 12px rgba(255, 217, 102, 0.1);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        /* Header */
+        .header { 
+            background-color: #ffd966; /* Gold */
+            padding: 30px 30px 20px 30px; 
+            text-align: center; 
+            color: black;
+            border-bottom: 4px solid #1a1a1a;
+        }
+        .logo-container {
+            margin-bottom: 15px;
+        }
+        .logo-placeholder {
+            width: 50px;
+            height: 50px;
+            line-height: 50px;
+            background-color: black;
+            color: #ffd966;
+            display: inline-block;
+            text-align: center;
+            font-size: 10px;
+            font-weight: 700;
+            border-radius: 50%;
+        }
+        .header h1 { 
+            margin: 0; 
+            color: black; 
+            font-size: 28px; 
+            letter-spacing: 1px; 
+            text-transform: uppercase; 
+            font-weight: 700;
+        }
+        .header span {
+            display: block;
+            margin-top: 5px;
+            font-size: 14px;
+            color: #444;
+        }
+        
+        /* Content */
+        .content { 
+            padding: 30px; 
+            color: #e0e0e0; 
+        }
+        .intro { 
+            font-size: 16px; 
+            line-height: 1.6; 
+            margin-bottom: 30px; 
+            border-bottom: 1px solid #333; 
+            padding-bottom: 20px; 
+        }
+        .intro strong {
+            color: #ffd966;
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 600;
+        }
+        
+        /* Project Cards */
+        .project-card { 
+            background-color: #121212; /* Deep Black for Contrast */
+            border-left: 4px solid #ffd966; 
+            margin-bottom: 25px; 
+            padding: 20px;
+            border-radius: 6px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.5);
+        }
+        .project-title { 
+            color: #ffd966; 
+            font-size: 18px; 
+            margin-top: 0; 
+            margin-bottom: 10px; 
+            text-transform: uppercase; 
+            font-weight: 600;
+        }
+        .project-body { 
+            font-size: 14px; 
+            line-height: 1.5; 
+            color: #cccccc; 
+        }
+        .project-body ul {
+            padding-left: 20px;
+            margin-top: 10px;
+            list-style: disc;
+        }
+        .project-body ul li {
+            margin-bottom: 5px;
+            line-height: 1.4;
+        }
+        .team-label {
+            display: block;
+            font-size: 12px;
+            color: #999;
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px dashed #333;
+        }
+        .team-members {
+            font-size: 14px;
+            color: #ffd966;
+            font-weight: 600;
+        }
+        
+        /* Footer */
+        .footer { 
+            text-align: center; 
+            padding: 20px; 
+            font-size: 12px; 
+            color: #666; 
+            background-color: #121212; 
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- HEADER -->
+        <div class="header">
+            <div class="logo-container">
+                <div class="logo-placeholder"><img src="team_logo.png" alt="Team Logo" /></div>
+            </div>
+            <h1>Weekly Engineering Digest</h1>
+            <span>{{ date_range }}</span>
+        </div>
+
+        <!-- CONTENT -->
+        <div class="content">
+            <!-- AI Executive Summary -->
+            <div class="intro">
+                <strong>Executive Summary:</strong>
+                {{ executive_summary }}
+            </div>
+
+            <!-- Loop through Projects -->
+            {% for project, data in project_summaries.items() %}
+            <div class="project-card">
+                <h2 class="project-title">{{ project }}</h2>
+                <div class="project-body">
+                    <!-- Tasks/Summaries in Bullet Points -->
+                    <p><strong>Key Accomplishments & Focus:</strong></p>
+                    <ul>
+                        <!-- Assuming 'data.tasks' is a list of strings -->
+                        {% for task in data.tasks %}
+                        <li>{{ task }}</li>
+                        {% endfor %}
+                    </ul>
+                    
+                    <!-- Team who worked on it -->
+                    <span class="team-label">Team Contribution:</span>
+                    <span class="team-members">{{ data.team_members }}</span>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+
+        <!-- FOOTER -->
+        <div class="footer">
+            Generated by R&S Team &bull; Confidential Internal Document
+        </div>
+    </div>
+</body>
+</html>
