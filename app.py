@@ -6,9 +6,9 @@ from groq import Groq
 from schedule import start_scheduler
 from dotenv import load_dotenv
 import os
+from weekly_newsletter import run_email_weekly
 
 load_dotenv()
-
 
 app = Flask(__name__)
 app.secret_key = os.getenv("secret_key")  # Needed for flash messages
@@ -20,8 +20,8 @@ SHEET_NAME = os.getenv("SHEET_NAME")          # The main Google Sheet file name
 
 # Team List (Exact names matching your request)
 TEAM = [
-    'Jeffry', 'Pritika', 'Fariha', 'Krithi', 'Mahalakshmi', 'Lavanya', 
-    'Thakshana', 'Santhosh', 'Rishikesh', 'Vedavalli', 'Mythreye', 'Ashween'
+    'Jeffry', 'Pritika', 'Fariha', 'Krithiga', 'Mahalakshmi', 'Lavanya', 
+    'Thakshana', 'Santhosh', 'Rishikesh', 'Vedavalli', 'Mythreye S', 'Ashween', 'Aashish', 'Jeffery','Chandramohan', 'Roopa'
 ]
 
 # --- GOOGLE SHEETS CONNECTION ---
@@ -170,5 +170,6 @@ def submit():
 
 
 if __name__ == "__main__":
+    run_email_weekly()
     start_scheduler()
     app.run(port=5000)
